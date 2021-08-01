@@ -1,11 +1,70 @@
 import socket
 import select
 import time
+import peewee
+from peewee import *
+
+db = MySQLDatabase('TATU', user='root', passwd='root')
 
 HEADER_LENGTH = 10
 
 IP = "127.0.0.1"
 PORT = 1234
+
+set1 = set([1,2,3,4,5,6,7,8])
+
+class nuevo_persona:
+    def __init__(self,id,nombre,ssn,apellido):
+        Caracteristicas = [id,nombre,ssn,apellido]
+        self.id = id
+        self.nombre = nombre
+        self.ssn = ssn
+        self.apellido = apellido
+
+class persona:
+    def __init__(self,id,nombre,ssn,apellido):
+        self.id = id
+        self.nombre = nombre
+        self.ssn = ssn
+        self.apellido = apellido
+        
+
+class deuda:
+
+    def __init__(self,id,cantidad,cuota,atrazo):
+        self.id = id
+        self.cantidad = cantidad
+        self.cuota = cuota
+        self.atrazo = atrazo
+
+class Book(peewee.Model):
+    author = peewee.CharField()
+    title = peewee.TextField()
+
+    class Meta:
+        database = db
+
+# Book.create_table()
+# book = Book(author="me", title='Peewee is cool')
+# book.save()
+# for book in Book.filter(author="me"):
+#     print (book.title)
+
+
+def show():
+
+    pass
+
+def add():
+
+    pass
+def remove():
+
+    pass
+def selectw():
+
+    pass
+
 
 # Create a socket
 # socket.AF_INET - address family, IPv4, some otehr possible are AF_INET6, AF_BLUETOOTH, AF_UNIX
@@ -30,7 +89,14 @@ sockets_list = [server_socket]
 # List of connected clients - socket as a key, user header and name as data
 clients = {}
 
-print(f'Listening for connections on {IP}:{PORT}...')
+
+if db.is_closed:
+    print (f'connected to the database TATU. Status: Online')
+    print(f'Listening for connections on {IP}:{PORT}...')
+else:
+    print (f'Something went wrong, try again')
+    
+
 
 # Handles message receiving
 def receive_message(client_socket):
