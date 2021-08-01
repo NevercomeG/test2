@@ -1,4 +1,19 @@
 {
     "python.defaultinterpreterPath": "C:\\Users\\The Sovietic\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
-    "colorWheel.settings.workspaceColor": "hsl(125,53%,51%)"
+    "colorWheel.settings.workspaceColor": "hsl(125,53%,51%)",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "servidor",
+            "password": "root",
+            "username": "root",
+            "database": "servidor3"
+        }
+    ]
 }

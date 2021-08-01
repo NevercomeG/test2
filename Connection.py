@@ -1,34 +1,33 @@
-import threading
-from peewee import Metadata
-
-import os
+import socket
 
 from peewee import *
-from playhouse.db_url import connect
+from playhouse.mysql_ext import MySQLConnectorDatabase
+import sqlite3
+import _mysql_connector
+import pymysql.cursors
+from server import carros
+
 
 # Connect to the database URL defined in the environment, falling
 # back to a local Sqlite database if no database URL is specified.
-db = connect(os.environ.get('DATABASE') or 'sqlite:///default.db')
+DB_IP = "127.0.0.1"
+DB_PORT = 1234
+DB_HOST = "localhost"
+DB_USER = "root"
+DB_PASSWORD = "root"
+DB_NAME = "a"
 
-class BaseModel(Model):
-    class Meta:
-        database = db
+db = MySQLDatabase(
+    host= DB_HOST,
+    user= DB_USER,
+    password= DB_PASSWORD,
+    database= DB_NAME)
 
+db.connect()
 
-class ThreadSafeDatabaseMetadata(Metadata):
-    def __init__(self, *args, **kwargs):
-        # database attribute is stored in a thread-local.
-        self._local = threading.local()
-        super(ThreadSafeDatabaseMetadata, self).__init__(*args, **kwargs)
+if db.is_connection_usable() == True:
+    print(f'Connected to database "{DB_NAME}"')
+    carros()
 
-    def _get_db(self):
-        return getattr(self._local, 'database', self._database)
-    def _set_db(self, db):
-        self._local.database = self._database = db
-    database = property(_get_db, _set_db)
-
-
-class BaseModel(Model):
-    class Meta:
-        # Instruct peewee to use our thread-safe metadata implementation.
-        model_metadata_class = ThreadSafeDatabaseMetadata
+else:
+	print("Im Sorry, Something when wrong, try it next time")
