@@ -1,10 +1,7 @@
 import socket
-import select
 import errno
 import sys
 import time
-from datetime import datetime
-import tkinter as tk
 
 HEADER_LENGTH = 10
 

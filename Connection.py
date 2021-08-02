@@ -1,10 +1,4 @@
-import socket
-
 from peewee import *
-from playhouse.mysql_ext import MySQLConnectorDatabase
-import sqlite3
-import _mysql_connector
-import pymysql.cursors
 from server import carros
 
 
@@ -23,7 +17,10 @@ db = MySQLDatabase(
         user= DB_USER,
         password= DB_PASSWORD,
         database= DB_NAME)
-    
-db.connect()
+
+def connection():
+        db.connect()
+        return (db)   
+
 print(f'Connected to database "{DB_NAME}"')
 carros()

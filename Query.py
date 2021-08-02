@@ -1,22 +1,24 @@
-import socket
-# import time
-import pickle
+import requests
+import hashlib
+import datetime
+from connection import connection
+import flask
+database = connection()
 
+def Creating_new_user(database):
+    try:
+        with database.atomic():
+            # Attempt to create the user. If the username is taken, due to the
+            # unique constraint, the database will raise an IntegrityError.
+            user = flask.User.create(
+                username=requests.form['username'],
+                password=hashlib.md5(requests.form['password']).hexdigest(),
+                email=requests.form['email'],
+                join_date=datetime.datetime.now())
 
-HEADERSIZE = 10
+        # mark the user as being 'authenticated' by setting the session vars
+        flask.auth_user(user)
+        return flask.redirect('homepage')
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((socket.gethostname(),1234))
-s.listen(5)
-
-while True:
-    clientsocket, address = s.accept()
-    print(f"Connection from {address} has been established!")
-
-    
-    d = {1: "hey", 2: "There"}
-    msg = pickle.dumps(d)
-    msg = bytes(f'{len(msg):<{HEADERSIZE}}',"utf-8") + msg
-
-    clientsocket.send(msg)
-
+    except flask.IntegrityError:
+        flask('That username is already taken')

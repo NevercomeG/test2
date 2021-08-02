@@ -2,7 +2,6 @@ import socket
 import select
 import time
 from peewee import *
-from client import client_side
 
 HEADER_LENGTH = 10
 
