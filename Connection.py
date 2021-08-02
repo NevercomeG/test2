@@ -15,19 +15,15 @@ DB_PORT = 1234
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASSWORD = "root"
-DB_NAME = "a"
+DB_NAME = "nasdaq_db"
+
 
 db = MySQLDatabase(
-    host= DB_HOST,
-    user= DB_USER,
-    password= DB_PASSWORD,
-    database= DB_NAME)
-
+        host= DB_HOST,
+        user= DB_USER,
+        password= DB_PASSWORD,
+        database= DB_NAME)
+    
 db.connect()
-
-if db.is_connection_usable() == True:
-    print(f'Connected to database "{DB_NAME}"')
-    carros()
-
-else:
-	print("Im Sorry, Something when wrong, try it next time")
+print(f'Connected to database "{DB_NAME}"')
+carros()

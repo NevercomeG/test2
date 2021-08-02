@@ -2,6 +2,7 @@ import socket
 import select
 import time
 from peewee import *
+from client import client_side
 
 HEADER_LENGTH = 10
 
@@ -9,7 +10,6 @@ IP = "127.0.0.1"
 PORT = 1234
 
 set1 = set([1,2,3,4,5,6,7,8])
-
 def carros():
 # Create a socket
 # socket.AF_INET - address family, IPv4, some otehr possible are AF_INET6, AF_BLUETOOTH, AF_UNIX
